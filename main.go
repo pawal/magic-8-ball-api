@@ -9,9 +9,9 @@ import (
 )
 
 type Magic struct {
-	Id     int    `json:Id`
-	Answer string `json:Answer`
-	Type   string `json:Type`
+	Id     int    `json:"Id"`
+	Answer string `json:"Answer"`
+	Type   string `json:"Type"`
 }
 
 var MagicAnswers []Magic
