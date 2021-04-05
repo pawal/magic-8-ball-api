@@ -17,16 +17,19 @@ type Magic struct {
 var MagicAnswers []Magic
 
 func homePage(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("/ reached")
 	fmt.Fprintf(w, "Magic 8-ball API!")
 }
 
 func returnRandomAnswer(w http.ResponseWriter, r *http.Request) {
 	randomIndex := rand.Intn(len(MagicAnswers))
+	fmt.Printf("/magic answered with %d: %s\n", randomIndex, MagicAnswers[randomIndex].Answer)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(MagicAnswers[randomIndex])
 }
 
 func returnAnswers(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("/completemagic answered")
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(MagicAnswers)
 }
@@ -61,6 +64,6 @@ func main() {
 		{18, "Outlook not so good.", "negative"},
 		{19, "Very doubtful. ", "negative"},
 	}
-	fmt.Println("foo")
+	fmt.Println("Started")
 	handleRequests()
 }
