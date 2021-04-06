@@ -16,6 +16,14 @@ type Magic struct {
 
 var MagicAnswers []Magic
 
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
+func setJson(w *http.ResponseWriter) {
+	(*w).Header().Set("Content-Type", "application/json")
+}
+
 func homePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("/ reached")
 	fmt.Fprintf(w, "Magic 8-ball API!")
@@ -24,13 +32,15 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 func returnRandomAnswer(w http.ResponseWriter, r *http.Request) {
 	randomIndex := rand.Intn(len(MagicAnswers))
 	fmt.Printf("/magic answered with %d: %s\n", randomIndex, MagicAnswers[randomIndex].Answer)
-	w.Header().Set("Content-Type", "application/json")
+	setJson(&w)
+	enableCors(&w)
 	json.NewEncoder(w).Encode(MagicAnswers[randomIndex])
 }
 
 func returnAnswers(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("/completemagic answered")
-	w.Header().Set("Content-Type", "application/json")
+	setJson(&w)
+	enableCors(&w)
 	json.NewEncoder(w).Encode(MagicAnswers)
 }
 
